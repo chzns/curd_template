@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <Title>curd_createprocedure</Title>
+      <Author>Hongzhong</Author>
+      <Description></Description>
+      <HelpUrl></HelpUrl>
+      <SnippetTypes>
+        <SnippetType>Expansion</SnippetType>
+      </SnippetTypes>
+      <Keywords />
+      <Keywords />
+      <Shortcut></Shortcut>
+    </Header>
+    <Snippet>
+      <References />
+      <Imports />
+      <Declarations>
+        <Literal Editable="true">
+          <ID>SchemaName</ID>
+          <Type></Type>
+          <ToolTip>Name of the schema</ToolTip>
+          <Default>dbo</Default>
+          <Function></Function>
+        </Literal>
+        <Literal Editable="true">
+          <ID>FunctionName</ID>
+          <Type></Type>
+          <ToolTip>Name of the function</ToolTip>
+          <Default>FunctionName</Default>
+          <Function></Function>
+        </Literal>
+        <Literal Editable="true">
+          <ID>Param1</ID>
+          <Type></Type>
+          <ToolTip>Name of the input parameter</ToolTip>
+          <Default>param1</Default>
+          <Function></Function>
+        </Literal>
+        <Literal Editable="true">
+          <ID>Param2</ID>
+          <Type></Type>
+          <ToolTip>Name of the input parameter</ToolTip>
+          <Default>param2</Default>
+          <Function></Function>
+        </Literal>
+        <Literal Editable="true">
+          <ID>Datatype_Param1</ID>
+          <Type></Type>
+          <ToolTip>Data type of the input parameter</ToolTip>
+          <Default>int</Default>
+          <Function></Function>
+        </Literal>
+        <Literal Editable="true">
+          <ID>Datatype_Param2</ID>
+          <Type></Type>
+          <ToolTip>Data type of the input parameter</ToolTip>
+          <Default>int</Default>
+          <Function></Function>
+        </Literal>
+        <Literal Editable="true">
+          <ID>Returned_datatype</ID>
+          <Type></Type>
+          <ToolTip>Data type returned by the scalar function</ToolTip>
+          <Default>INT</Default>
+          <Function></Function>
+        </Literal>
+      </Declarations>
+      <Code Language="SQL" Kind="" Delimiter="$"><![CDATA[
+-- -------------------------------------------------------------------------------------------------------------------------
+-- Purpose:     Create PROCEDURE template
+-- -------------------------------------------------------------------------------------------------------------------------
+-- Date Updated By          Reason
+-- ------------ ----------  ------------------------------------------------------------------------------------------------
+-- 2024/08/14   HongZhong   ready for demo
+CREATE PROCEDURE DeleteTableName
+    @Id INT
+AS
+BEGIN
+    BEGIN TRANSACTION
+    BEGIN TRY
+        DELETE FROM TableName WHERE Id = @Id
+        COMMIT TRANSACTION
+    END TRY
+    BEGIN CATCH
+        SELECT ERROR_MESSAGE()
+        ROLLBACK TRANSACTION
+    END CATCH
+END
+      ]]></Code>
+    </Snippet>
+  </CodeSnippet>
+</CodeSnippets>

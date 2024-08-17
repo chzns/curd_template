@@ -1,0 +1,141 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <SnippetTypes>
+        <SnippetType>Expansion</SnippetType>
+      </SnippetTypes>
+      <Title>curd_controller</Title>
+      <Author>
+      </Author>
+      <Description>
+      </Description>
+      <HelpUrl>
+      </HelpUrl>
+      <Shortcut>curd_controller</Shortcut>
+    </Header>
+    <Snippet>
+      <Declarations>
+      </Declarations>
+      <Code Language="csharp" Delimiter="$"><![CDATA[        private readonly DemoContext _context;
+        private readonly ILogger<#TableName#Controller> _logger;
+
+        public #TableName#Controller(ILogger<#TableName#Controller> logger, DemoContext context)
+        {
+            _logger = logger;
+            _context = context;
+        }
+
+        [HttpGet]
+        [Route("Get#TableName#")]
+        public async Task<ActionResult<List<#TableName#>>> Get#TableName#()
+        {
+            try
+            {
+                var #TableName#s = await _context.#TableName#s.ToListAsync();
+                return Ok(#TableName#s);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception details here
+                return StatusCode(StatusCodes.Status500InternalServerError,$$"Error retrieving #TableName#s: {ex.Message}");
+            }
+        }
+
+
+        [HttpPost]
+        [Route("Add#TableName#")]
+        public async Task<ActionResult<#TableName#>> Add#TableName#(#TableName# #TableName#)
+        {
+            if (#TableName# == null)
+            {
+                return BadRequest("#TableName# object is null");
+            }
+
+            try
+            {
+                _context.#TableName#s.Add(#TableName#);
+                await _context.SaveChangesAsync();
+
+                return CreatedAtAction(nameof(Get#TableName#), new { }, #TableName#);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                   $$"Error adding #TableName#: {ex.Message}");
+            }
+        }
+
+
+        [HttpPut]
+        [Route("Edit#TableName#/{id}")]
+        public async Task<ActionResult<#TableName#>> Edit#TableName#(int id, #TableName# #TableName#)
+        {
+            if (#TableName# == null)
+            {
+                return BadRequest("#TableName# object is null");
+            }
+
+            // ID是否存在
+            var existing#TableName# = await _context.#TableName#s.FindAsync(id);
+            if (existing#TableName# == null)
+            {
+                return NotFound($$"#TableName# with ID {id} not found");
+            }
+
+            try
+            {
+                // 更新范围
+                existing#TableName#.Name = #TableName#.Name;
+                // 更新范围
+
+                await _context.SaveChangesAsync();
+
+                return Ok(existing#TableName#); // 返回更新后的材料
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                   $$"Error updating #TableName#: {ex.Message}");
+            }
+        }
+
+
+
+        [HttpDelete]
+        [Route("Delete#TableName#/{id}")]
+        public async Task<ActionResult> Delete#TableName#(int id)
+        {
+            try
+            {
+                var #TableName# = await _context.#TableName#s.FindAsync(id);
+
+                if (#TableName# == null)
+                {
+                    return NotFound($$"#TableName# with ID {id} not found");
+                }
+
+                _context.#TableName#s.Remove(#TableName#);
+                await _context.SaveChangesAsync();
+
+                //var result = await _context.Database.ExecuteSqlRawAsync("EXEC Delete @Id", new SqlParameter("@Id", id));
+                //if (result == 0)
+                //{
+                //    return NotFound($$" ID {id} not found");
+                //}
+
+                return NoContent(); // 返回 204 No Content 表示删除成功
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                   $$"Error deleting #TableName#: {ex.Message}");
+            }
+        }
+
+      
+
+        ]]></Code>
+    </Snippet>
+  </CodeSnippet>
+</CodeSnippets>
